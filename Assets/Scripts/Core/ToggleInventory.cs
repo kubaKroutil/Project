@@ -41,7 +41,7 @@ namespace Project.Core
                 InventoryToggle();
             }
         }
-        private void InventoryToggle()
+        public void InventoryToggle()
         {
             InventoryUI.SetActive(!InventoryUI.activeSelf);
             gameManagerMaster.isInventoryUIOn = !gameManagerMaster.isInventoryUIOn;

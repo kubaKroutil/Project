@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
         public event PlayerEventHandler HandsEmptyEvent;
         public event PlayerEventHandler AmmoChangedEvent;
 
+        public delegate void MoveEventHandler(Vector3 _Vector3);
+        public event MoveEventHandler MoveEvent;
+
         public delegate void AmmoEventHandler(string _AmmoType, int _Quantity);
         public event AmmoEventHandler PickUpAmmoEvent;
 
@@ -24,7 +27,10 @@ public class PlayerController : MonoBehaviour
         {
             this.GameManagerMaster = GameObject.FindObjectOfType<GameManagerMaster>();
         }
-
+        public void CallMoveEvent(Vector3 _Vector3)
+        {
+            MoveEvent?.Invoke(_Vector3);
+        }
         public void CallInventoryChangedEvent()
         {
             CallEvent(InventoryChangedEvent);
