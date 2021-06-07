@@ -5,10 +5,15 @@ using UnityEngine.AI;
 
 namespace Project.Player
 {
+    public enum MovementState
+    {
+        Idle, Move, MoveAndPick
+    }
     public class PlayerMovement : MonoBehaviour
     {
         private PlayerController playerController;
         private NavMeshAgent navMeshAgent;
+        public MovementState MovementState { get; private set; }
         private void OnEnable()
         {
             this.Initialization();
@@ -35,8 +40,7 @@ namespace Project.Player
         private void MoveToCursor()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 playerController.CallMoveEvent(hit.point);
             }

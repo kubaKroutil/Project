@@ -58,7 +58,7 @@ namespace Project.Player
                     int index = this.Counter;
                     go.GetComponent<Button>().onClick.AddListener(delegate { ActivateInventoryItem(index); });
                     go.GetComponent<Button>().onClick.AddListener(delegate { InventoryScript.InventoryToggle(); });
-                    go.transform.SetParent(this.InventoryPlayerParent, false);
+                    go.transform.SetParent(this.InventoryUIParent, false);
                     Counter++;
                 }
             }
@@ -79,7 +79,7 @@ namespace Project.Player
         }
         private void ClearInventoryUI()
         {
-            foreach (Transform transform in this.Inventory)
+            foreach (Transform transform in this.InventoryUIParent)
             {
                 Destroy(transform.gameObject);
             }

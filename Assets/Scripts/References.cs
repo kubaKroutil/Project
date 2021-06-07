@@ -2,30 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Project.Core
+namespace Project.General
 {
     public class References : MonoBehaviour
     {
-        public string PlayerTag;
-        public static string _PlayerTag;
-
-        public string EnemyTag;
-        public static string _EnemyTag;
-
-        public GameObject Player;
+        [SerializeField]
+        private string playerTag = "Player";
+        public static string PlayerTag;
+        
+        [SerializeField]
+        private string itemTag = "Item";
+        public static string ItemTag;
+        public static GameObject Player;
 
         // Start is called before the first frame update
-        private void OnEnable()
+        private void Awake()
         {
-            if (PlayerTag == string.Empty)
+            if (playerTag == string.Empty)
             {
                 Debug.LogError("PlayerTag not found! by References class, gameobject: " + this.gameObject.name);
             }
             else
             {
-                _PlayerTag = PlayerTag;
-                Player = GameObject.FindGameObjectWithTag(_PlayerTag);
+                PlayerTag = this.playerTag;
+                Player = GameObject.FindGameObjectWithTag(PlayerTag);
             }
+            ItemTag = this.itemTag;
+        }
+        /// <summary>
+        /// Compare given tran
+        /// </summary>
+        /// <param name="transformToCompare"></param>
+        /// <returns></returns>
+        public static bool CompareToPlayerTag(Transform transformToCompare)
+        {
+            return transformToCompare.CompareTag(References.PlayerTag);
         }
     }
 }

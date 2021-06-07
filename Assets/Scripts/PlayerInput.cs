@@ -30,7 +30,7 @@ namespace Project.Player
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                playerController.CallMoveEvent(hit.point);
+                //playerController.CallMoveEvent(hit.point);
             }
         }
     }

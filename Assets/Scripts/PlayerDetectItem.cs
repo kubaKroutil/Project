@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Project.General;
+using Project.General.Item;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,81 +8,69 @@ namespace Project.Player
 {
 public class PlayerDetectItem : MonoBehaviour
 {
-        //[Tooltip("What layers is being used for items.")]
-        //public LayerMask layerToDetect;
-        //[Tooltip("what transform will the ray be fired from?")]
-        //public Transform rayTransformPivot;
-        //[Tooltip("the editor input button that will be used for picking items")]
-        //public string buttonPickUp;
+        [Tooltip("What layers is being used for items.")]
+        public LayerMask layerToDetect;
+        [Tooltip("what transform will the ray be fired from?")]
+        public Transform rayTransformPivot;
+        [Tooltip("the editor input button that will be used for picking items")]
+        public string buttonPickUp;
+        [SerializeField]
+        private Transform PlayerInventoryParent;
+        [SerializeField]
+        private readonly float labelWidth = 200;
+        [SerializeField]
+        private readonly float labelHeight = 50;
+        [SerializeField]
+        private readonly float labelOffset = 10;
 
-        //private Transform itemAvailableForPickup;
-        //private RaycastHit hit;
-        //private float detectRange = 3;
-        //private float DetectRadius = 0.7f;
-        //private bool itemInRange;
+        private Transform itemAvailableForPickup;
+        // Update is called once per frame
+        void Update()
+        {
+            CastRayForDetectingItems();
+            CheckForItemPickupAttempt();
+        }
 
-        //private float labelWidth = 200;
-        //private float labelHeight = 50;
+        void CastRayForDetectingItems()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (!hit.transform.root.CompareTag(References.PlayerTag) && hit.transform.CompareTag(References.ItemTag))
+                {
+                    itemAvailableForPickup = hit.transform;
+                }
+                else
+                {
+                    itemAvailableForPickup = null;
+                }
+            }
+            else
+            {
+                itemAvailableForPickup = null;
+            }
+        }
 
-        //void OnEnable()
-        //{
+        void CheckForItemPickupAttempt()
+        {
+            if (Input.GetButtonDown(buttonPickUp) && Time.timeScale > 0 && itemAvailableForPickup != null)
+            {
+                itemAvailableForPickup.GetComponent<ItemController>().CallItemPickUpActionEvent(PlayerInventoryParent);
+                itemAvailableForPickup = null;
+            }
+        }
 
-        //}
-
-        //void OnDisable()
-        //{
-
-        //}
-
-        //// Use this for initialization
-        //void Start()
-        //{
-
-        //}
-
-        //// Update is called once per frame
-        //void Update()
-        //{
-        //    CastRayForDetectingItems();
-        //    CheckForItemPickupAttempt();
-        //}
-
-        //void SetInitialReferences()
-        //{
-
-        //}
-
-        //void CastRayForDetectingItems()
-        //{
-        //    if (Physics.SphereCast(rayTransformPivot.position, DetectRadius, rayTransformPivot.forward, out hit, detectRange, layerToDetect))
-        //    {
-        //        itemAvailableForPickup = hit.transform;
-        //        itemInRange = true;
-        //    }
-        //    else
-        //    {
-        //        itemInRange = false;
-        //    }
-        //}
-
-        //void CheckForItemPickupAttempt()
-        //{
-        //    if (Input.GetButtonDown(buttonPickUp) && Time.timeScale > 0 && itemInRange 
-        //        //&& itemAvailableForPickup.root.tag != GameManager_References._playerTag
-        //        )
-        //    {
-        //        Debug.Log("Pickup attempted");
-        //        //itemAvailableForPickup.GetComponent<item_Master> ().CallEventPickupAction (ray.TransformPivot);
-        //    }
-        //}
-
-        //void OnGUI()
-        //{
-        //    if (itemInRange && itemAvailableForPickup != null)
-        //    {
-        //        GUI.Label(new Rect(Screen.width / 2 - labelWidth / 2, Screen.height / 2, labelWidth, labelHeight), itemAvailableForPickup.name);
-
-        //    }
-        //}
+        void OnGUI()
+        {
+            if (itemAvailableForPickup != null)
+            {
+                Debug.Log(Screen.height + " - " + Input.mousePosition.y + "=" + (Screen.height - Input.mousePosition.y));
+                //calculate y position
+                float yPos = Screen.height - Input.mousePosition.y > 0 ?
+                             Screen.height - Input.mousePosition.y - labelOffset
+                            :Screen.height - Input.mousePosition.y + labelOffset;
+                GUI.Label(new Rect(Input.mousePosition.x, yPos, labelWidth, labelHeight), itemAvailableForPickup.name);
+            }
+        }
     }
 }

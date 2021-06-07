@@ -12,13 +12,15 @@ public class PlayerController : MonoBehaviour
         public event PlayerEventHandler HandsEmptyEvent;
         public event PlayerEventHandler AmmoChangedEvent;
 
-        public delegate void MoveEventHandler(Vector3 _Vector3);
+        public delegate void MoveEventHandler(Vector3 vector3);
         public event MoveEventHandler MoveEvent;
+        public delegate void MoveAndPickEventHandler(Vector3 vector3,Transform item);
+        public event MoveAndPickEventHandler MoveAndPickEvent;
 
-        public delegate void AmmoEventHandler(string _AmmoType, int _Quantity);
+        public delegate void AmmoEventHandler(string ammoType, int quantity);
         public event AmmoEventHandler PickUpAmmoEvent;
 
-        public delegate void PlayerHealthEventHandler(int _HealthChange);
+        public delegate void PlayerHealthEventHandler(int hitPointChange);
         public event PlayerHealthEventHandler PlayerHealthIncreaseEvent;
         public event PlayerHealthEventHandler PlayerHealthDecreaseEvent;
 
@@ -26,6 +28,10 @@ public class PlayerController : MonoBehaviour
         private void Awake()
         {
             this.GameManagerMaster = GameObject.FindObjectOfType<GameManagerMaster>();
+        }
+        public void CallMoveAndPickEvent(Vector3 vector3, Transform item)
+        {
+            MoveAndPickEvent?.Invoke(vector3, item);
         }
         public void CallMoveEvent(Vector3 _Vector3)
         {
