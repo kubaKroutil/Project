@@ -23,32 +23,16 @@ namespace Project.Player
         {
             playerController.MoveEvent -= Move;
         }
-        private void Update()
-        {
-            if (Input.GetMouseButton(0))
-            {
-                MoveToCursor();
-            }
-
-        }
-
         private void Initialization()
         {
             this.playerController = this.GetComponent<PlayerController>();
             this.navMeshAgent = this.GetComponent<NavMeshAgent>();
+            this.MovementState = MovementState.Idle;
         }
-        private void MoveToCursor()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                playerController.CallMoveEvent(hit.point);
-            }
-        }
-
         private void Move(Vector3 hit)
         {
             this.navMeshAgent.SetDestination(hit);
+            this.MovementState = MovementState.Move;
         }
     }
 }
