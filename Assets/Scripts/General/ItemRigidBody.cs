@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Project.Core;
 using UnityEngine;
 
 namespace Project.General.Item
@@ -22,23 +21,23 @@ namespace Project.General.Item
         }
         private void CheckIfStartInInventory()
         {
-            if (this.transform.root.CompareTag(References.PlayerTag))
+            if (transform.root.CompareTag(References.PlayerTag))
             {
                 SetKinematicToTrue();
             }
         }
         private void SetKinematicToFalse()
         {
-            this.Rigidbody.isKinematic = false;
+            Rigidbody.isKinematic = false;
         }
         private void SetKinematicToTrue()
         {
-            this.Rigidbody.isKinematic = true;
+            Rigidbody.isKinematic = true;
         }
         private void Initialization()
         {
-            this.ItemController = this.GetComponent<ItemController>();
-            this.Rigidbody = this.GetComponent<Rigidbody>();
+            ItemController = GetComponent<ItemController>();
+            Rigidbody = GetComponent<Rigidbody>();
         }
     }
 }

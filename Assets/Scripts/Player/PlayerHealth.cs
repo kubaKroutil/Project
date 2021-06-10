@@ -7,11 +7,11 @@ namespace Project.Player
 {
     public class PlayerHealth : MonoBehaviour
     {
-        
-        private PlayerController playerController;
         [SerializeField]
-        private int HP;
-        public Text healthText;
+        private int hitPoints;
+        [SerializeField]
+        private Text healthText;
+        private PlayerController playerController;
         private void OnEnable()
         {
             Initialization();
@@ -26,17 +26,16 @@ namespace Project.Player
         }
         private void HealthIncrease(int _HP)
         {
-            HP += _HP;
+            hitPoints += _HP;
         }
         private void HealthDecrease(int _HP)
         {
-            HP -= _HP;
+            hitPoints -= _HP;
             //SET GAME OVER
-            playerController.GameManagerMaster.CallGameOverEvent();
         }
         private void SetUI()
         {
-            healthText.text = HP.ToString();
+            healthText.text = hitPoints.ToString();
         }
         private void Initialization()
         {

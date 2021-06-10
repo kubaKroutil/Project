@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Project.Core
 {
     public class ToggleMenu : MonoBehaviour
     {
-        private GameManagerMaster gameManagerMaster;
-
         [SerializeField]
-        private GameObject menu = null;
-
+        private GameObject menu;
+        private GameManagerMaster gameManagerMaster;
         private void Update()
         {
             CheckForToggleMenuRequest();
@@ -29,17 +25,16 @@ namespace Project.Core
 
         private void Initialization()
         {
-            this.gameManagerMaster = this.GetComponent<GameManagerMaster>();
+            gameManagerMaster = GetComponent<GameManagerMaster>();
             if (menu == null)
             {
-                Debug.LogError("Menu not found! by TogglePause class, gameobject: " + this.gameObject.name);
+                Debug.LogError("InventoryUI not found! by ToggleInventory class, gameobject: " + this.gameObject.name);
             }
         }
 
         private void CheckForToggleMenuRequest()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && !gameManagerMaster.isGameOver
-                && !gameManagerMaster.isInventoryUIOn)
+            if (Input.GetButtonDown(References.ToggleMenuButton) && gameManagerMaster.CanOpenMenu)
             {
                 gameManagerMaster.CallMenuToggleEvent();
             }
@@ -48,7 +43,6 @@ namespace Project.Core
         private void MenuToggle()
         {
             menu.SetActive(!menu.activeSelf);
-            gameManagerMaster.isMenuOn = !gameManagerMaster.isMenuOn;
         }
     }
 }

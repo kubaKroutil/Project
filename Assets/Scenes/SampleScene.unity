@@ -141,9 +141,9 @@ GameObject:
   - component: {fileID: 1642081}
   - component: {fileID: 1642082}
   - component: {fileID: 1642083}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CubeItem
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1642072
 BoxCollider:
@@ -325,8 +325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ba7fa885bd6004ab2ef7cd635fbdbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemThrowLayer: 
-  itemPickUpLayer: 
+  itemThrowLayer: Item
+  itemPickUpLayer: Item
 --- !u!114 &1642083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 5876374807079798893}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 45.2
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -607,7 +607,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.560423, y: 1}
+    m_SensorSize: {x: 1.7252747, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -623,14 +623,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54845889}
-  m_LocalRotation: {x: 0.35282457, y: 0.30453125, z: -0.122628115, w: 0.8762066}
-  m_LocalPosition: {x: -3.5770576, y: 6.543861, z: -6.964409}
+  m_LocalRotation: {x: 0.5283157, y: 0.27214003, z: -0.18362118, w: 0.7830106}
+  m_LocalPosition: {x: -1.8572572, y: 8.41836, z: -4.7891574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1619190172}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 68.017006, y: 38.33, z: 0}
 --- !u!1 &129299249
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,7 +649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &129299250
 RectTransform:
   m_ObjectHideFlags: 0
@@ -657,7 +657,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129299249}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
@@ -669,7 +669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &129299251
@@ -741,7 +741,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 165837458}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1891,8 +1891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ba7fa885bd6004ab2ef7cd635fbdbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemThrowLayer: 
-  itemPickUpLayer: 
+  itemThrowLayer: Item
+  itemPickUpLayer: Item
 --- !u!114 &958731228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2043,7 +2043,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1008334348
 GameObject:
@@ -2131,7 +2131,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 45.2
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2156,12 +2156,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008334348}
-  m_LocalRotation: {x: 0.35282457, y: 0.30453125, z: -0.122628115, w: 0.8762066}
-  m_LocalPosition: {x: -3.5770576, y: 6.543861, z: -6.964409}
+  m_LocalRotation: {x: 0.5283157, y: 0.27214003, z: -0.18362118, w: 0.7830106}
+  m_LocalPosition: {x: -1.8572572, y: 8.41836, z: -4.7891574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1096690869
 GameObject:
@@ -2568,8 +2568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ba7fa885bd6004ab2ef7cd635fbdbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemThrowLayer: 
-  itemPickUpLayer: 
+  itemThrowLayer: Item
+  itemPickUpLayer: Item
 --- !u!114 &1491513924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2720,7 +2720,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1514055564
 GameObject:
@@ -2898,11 +2898,9 @@ GameObject:
   - component: {fileID: 1588166426}
   - component: {fileID: 1588166425}
   - component: {fileID: 1588166424}
-  - component: {fileID: 1588166423}
   - component: {fileID: 1588166422}
   - component: {fileID: 1588166421}
   - component: {fileID: 1588166420}
-  - component: {fileID: 1588166419}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2910,19 +2908,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1588166419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588166418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48da71eab2e2c384b89bb62cb95552f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
 --- !u!114 &1588166420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2935,7 +2920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bd4c4794840b84b9d27823215e202e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPaused: 0
 --- !u!114 &1588166421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2962,19 +2946,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryUI: {fileID: 240631540}
-  ToggleInventoryButton: InventoryToggle
---- !u!114 &1588166423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588166418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b294a81b3bb81784b88b16b23c544408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1588166424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2989,6 +2960,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTag: Player
   itemTag: Item
+  player: {fileID: 5876374807079798888}
+  toggleInventoryButton: InventoryToggle
+  toggleMenuButton: Cancel
 --- !u!114 &1588166425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3079,9 +3053,9 @@ MonoBehaviour:
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.4767374
+  m_SoftZoneHeight: 0.5206935
   m_BiasX: 0
-  m_BiasY: -0.00000006251308
+  m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0
@@ -3552,8 +3526,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerInventoryParent: {fileID: 1430101750}
-  raycastHit: {fileID: 0}
-  ItemToPick: {fileID: 0}
+  pickRange: 1
+--- !u!136 &5876374807079798891
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876374807079798888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.26
+  m_Height: 1.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.15, z: 0}
 --- !u!4 &5876374807079798893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8381223697369284711, guid: a52d8d64c3a9d3644aecc985f99d338f,
@@ -3608,4 +3595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57ab6ec0f78eb24c8f5ea9637f6e4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastHit: {fileID: 0}
+  labelWidth: 200
+  labelHeight: 50
+  labelOffset: 10

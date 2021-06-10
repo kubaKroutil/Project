@@ -1,7 +1,5 @@
-﻿using Project.General;
-using Project.General.Item;
+﻿using Project.General.Item;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Project.Player
 {
@@ -10,33 +8,30 @@ namespace Project.Player
         [SerializeField]
         private Transform PlayerInventoryParent;
         [SerializeField]
-        private Transform raycastHit;
-        [SerializeField]
+        private float pickRange = 1f;
         private Transform ItemToPick;
         private PlayerController playerController;
         private void OnEnable()
         {
             this.Initialization();
-            playerController.PickItemEvent += PickItem;
-            playerController.SetItemToPickEvent += SetItemToPick;
+            this.playerController.PickItemEvent += PickItem;
+            this.playerController.SetItemToPickEvent += SetItemToPick;
         }
         private void OnDisable()
         {
-            playerController.PickItemEvent -= PickItem;
-            playerController.SetItemToPickEvent -= SetItemToPick;
+            this.playerController.PickItemEvent -= PickItem;
+            this.playerController.SetItemToPickEvent -= SetItemToPick;
         }
         void Update()
         {
-            if (ItemToPick != null)
-            {
-                CheckItemDistance();
-            }
+            this.CheckItemDistance();
         }
 
         private void CheckItemDistance()
         {
+            if (this.ItemToPick == null) return;
             //Debug.Log(Vector3.Distance(this.transform.position, ItemToPick.position));
-            if (Vector3.Distance(this.transform.position, ItemToPick.position) < 1f)
+            if (Vector3.Distance(this.transform.position, this.ItemToPick.position) < this.pickRange)
             {
                 this.playerController.CallPickItemEvent();
             }
@@ -48,12 +43,12 @@ namespace Project.Player
         }
         private void SetItemToPick(Transform item)
         {
-            ItemToPick = item;
+            this.ItemToPick = item;
         }
         private void PickItem()
         {
-            ItemToPick.GetComponent<ItemController>().CallItemPickUpActionEvent(PlayerInventoryParent);
-            ItemToPick = null;
+            this.ItemToPick.GetComponent<ItemController>().CallItemPickUpActionEvent(PlayerInventoryParent);
+            this.SetItemToPick(null);
         }
     }
 }

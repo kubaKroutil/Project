@@ -18,14 +18,12 @@ namespace Project.Player
         private float TimeToPlaceInHands = 0.3f;
 
         private PlayerController PlayerController;
-        private ToggleInventory InventoryScript;
         private Transform CurrentItem;
         private int Counter;
         private List<Transform> Inventory = new List<Transform>();
         private void Initialization()
         {
-            this.PlayerController = this.transform.root.GetComponent<PlayerController>();
-            this.InventoryScript = GameObject.FindObjectOfType<ToggleInventory>();
+            this.PlayerController = transform.root.GetComponent<PlayerController>();
         }
         private void OnEnable()
         {
@@ -57,7 +55,7 @@ namespace Project.Player
                     go.GetComponentInChildren<Text>().text = transform.name;
                     int index = this.Counter;
                     go.GetComponent<Button>().onClick.AddListener(delegate { ActivateInventoryItem(index); });
-                    go.GetComponent<Button>().onClick.AddListener(delegate { InventoryScript.InventoryToggle(); });
+                    go.GetComponent<Button>().onClick.AddListener(delegate { PlayerController.GameManagerMaster.CallInventoryUIToggleEvent(); });
                     go.transform.SetParent(this.InventoryUIParent, false);
                     Counter++;
                 }
@@ -93,7 +91,7 @@ namespace Project.Player
         {
             foreach (Transform transform in this.InventoryPlayerParent)
             {
-                if (transform.CompareTag("Item"))
+                if (transform.CompareTag(References.ItemTag))
                 {
                     transform.gameObject.SetActive(false);
                 }
@@ -102,8 +100,8 @@ namespace Project.Player
         IEnumerator PlaceItemsInHands(Transform _Item)
         {
             yield return new WaitForSeconds(TimeToPlaceInHands);
-            this.CurrentItem = _Item;
-            this.CurrentItem.gameObject.SetActive(true);
+            CurrentItem = _Item;
+            CurrentItem.gameObject.SetActive(true);
         }
     }
 }

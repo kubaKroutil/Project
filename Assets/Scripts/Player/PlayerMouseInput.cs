@@ -1,60 +1,93 @@
-﻿using Project.General;
+﻿using Project.Core;
+using Project.General;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Project.Player
 {
     public class PlayerMouseInput : MonoBehaviour
     {
         [SerializeField]
-        private readonly float labelWidth = 200;
+        private float labelWidth = 200;
         [SerializeField]
-        private readonly float labelHeight = 50;
+        private float labelHeight = 50;
         [SerializeField]
-        private readonly float labelOffset = 10;
-        [SerializeField]
+        private float labelOffset = 10;
         private Transform raycastHit;
         private Vector3 raycastHitPosition;
+        private Vector3 raycastHitPositionForGUI;
         private PlayerController playerController;
         private void OnEnable()
         {
-            this.Initialization();
+            Initialization();
         }
         private void Update()
         {
-            if (MouseRaycast() && Input.GetMouseButtonDown(0))
+            if (!CanMouseRaycast())
             {
-                CheckHit();
+                ResetRaycastHit();
+                return;
             }
-            
+            MouseRaycast();
+            if (Input.GetMouseButton(0))
+            {
+                CheckHitLeftButton();
+            }
         }
         private void Initialization()
         {
-            this.playerController = this.GetComponent<PlayerController>();
+            playerController = GetComponent<PlayerController>();
         }
-        private void CheckHit()
+        private void CheckHitLeftButton()
         {
             //Check if it item
-            if (this.IsTransformItem()) this.playerController.CallSetItemToPickEvent(raycastHit);
-            else this.playerController.CallSetItemToPickEvent(null);
+            if (IsTransformItem())
+            {
+                playerController.CallSetItemToPickEvent(raycastHit);
+            }
+            else
+            {
+               playerController.CallSetItemToPickEvent(null);
+            }
             //then move
-            this.playerController.CallMoveEvent(this.raycastHitPosition);
+            playerController.CallMoveEvent(raycastHitPosition);
+        }
+        private bool CanMouseRaycast()
+        {
+            return !EventSystem.current.IsPointerOverGameObject() && Time.timeScale != 0;
         }
         private bool MouseRaycast()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                this.raycastHit = hit.transform;
-                this.raycastHitPosition = hit.point;
-                return true;
+                if (!IsPlayer(hit.transform))
+                {
+                    SetRaycastHit(hit);
+                    return true;
+                }
             }
+            ResetRaycastHit();
             return false;
         }
         private bool IsTransformItem()
         {
-            return !raycastHit.root.CompareTag(References.PlayerTag) && raycastHit.transform.CompareTag(References.ItemTag);
+            return raycastHit.transform.CompareTag(References.ItemTag);
+        }
+        private bool IsPlayer(Transform transform)
+        {
+            return transform.root.CompareTag(References.PlayerTag);
+        }
+        private void SetRaycastHit(RaycastHit hit)
+        {
+            raycastHit = hit.transform;
+            raycastHitPosition = hit.point;
+        }
+        private void ResetRaycastHit()
+        {
+            this.raycastHit = null;
         }
 
         private void OnGUI()
@@ -66,7 +99,7 @@ namespace Project.Player
                 float yPos = Screen.height - Input.mousePosition.y > 0 ?
                              Screen.height - Input.mousePosition.y - labelOffset
                             : Screen.height - Input.mousePosition.y + labelOffset;
-                GUI.Label(new Rect(Input.mousePosition.x, yPos, labelWidth, labelHeight), raycastHit.name);
+                GUI.Label(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y, labelWidth, labelHeight), raycastHit.name);
             }
         }
     }

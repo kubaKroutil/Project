@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Project.Core;
 using UnityEngine;
 
 namespace Project.General.Item

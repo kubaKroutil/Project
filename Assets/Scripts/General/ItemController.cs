@@ -1,4 +1,5 @@
-﻿using Project.Player;
+﻿using Project.Core;
+using Project.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,13 +20,13 @@ public class ItemController : MonoBehaviour
         private void OnEnable()
         {
             Initialization();
-            this.playerController = References.Player.GetComponent<PlayerController>();
         }
 
         private void Initialization()
         {
-            this.transform.tag = References.ItemTag;
-            this.transform.name = References.ItemTag;
+            transform.tag = References.ItemTag;
+            transform.name = References.ItemTag;
+            playerController = References.Player.GetComponent<PlayerController>();
         }
 
         public void CallItemThrowEvent()
