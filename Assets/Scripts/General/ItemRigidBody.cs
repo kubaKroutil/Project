@@ -5,39 +5,41 @@ namespace Project.General.Item
 {
     public class ItemRigidBody : MonoBehaviour
     {
-        private ItemController ItemController;
-        private Rigidbody Rigidbody;
+        private ItemController itemController;
+        private Rigidbody myRigidbody;
         private void OnEnable()
         {
-            this.Initialization();
+            Initialization();
             CheckIfStartInInventory();
-            ItemController.ItemThrowEvent += SetKinematicToFalse;
-            ItemController.ItemPickUpEvent += SetKinematicToTrue;
+            itemController.ThrowEvent += SetKinematicToFalse;
+            itemController.DropEvent += SetKinematicToFalse;
+            itemController.PickUpEvent += SetKinematicToTrue;
         }
         private void OnDisable()
         {
-            ItemController.ItemThrowEvent -= SetKinematicToFalse;
-            ItemController.ItemPickUpEvent -= SetKinematicToTrue;
+            itemController.ThrowEvent -= SetKinematicToFalse;
+            itemController.DropEvent += SetKinematicToFalse;
+            itemController.PickUpEvent -= SetKinematicToTrue;
         }
         private void CheckIfStartInInventory()
         {
-            if (transform.root.CompareTag(References.PlayerTag))
+            if (itemController.IsInInventory)
             {
                 SetKinematicToTrue();
             }
         }
         private void SetKinematicToFalse()
         {
-            Rigidbody.isKinematic = false;
+            myRigidbody.isKinematic = false;
         }
         private void SetKinematicToTrue()
         {
-            Rigidbody.isKinematic = true;
+            myRigidbody.isKinematic = true;
         }
         private void Initialization()
         {
-            ItemController = GetComponent<ItemController>();
-            Rigidbody = GetComponent<Rigidbody>();
+            itemController = GetComponent<ItemController>();
+            myRigidbody = GetComponent<Rigidbody>();
         }
     }
 }

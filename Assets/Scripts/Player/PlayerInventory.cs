@@ -18,12 +18,14 @@ namespace Project.Player
         private float TimeToPlaceInHands = 0.3f;
 
         private PlayerController PlayerController;
-        private Transform CurrentItem;
         private int Counter;
         private List<Transform> Inventory = new List<Transform>();
+        public Transform currentItem;
+        public bool AreHandsEmpty { get { return currentItem == null; } }
+        public bool IsItemInHands { get { return !AreHandsEmpty && currentItem.CompareTag(References.ItemTag); } }
         private void Initialization()
         {
-            this.PlayerController = transform.root.GetComponent<PlayerController>();
+            PlayerController = transform.root.GetComponent<PlayerController>();
         }
         private void OnEnable()
         {
@@ -66,14 +68,14 @@ namespace Project.Player
         /// </summary>
         private void CheckIfHandsEmpty()
         {
-            if (CurrentItem == null && Inventory.Count > 0)
+            if (currentItem == null && Inventory.Count > 0)
             {
                 StartCoroutine(PlaceItemsInHands(Inventory[0]));
             }
         }
         private void ClearHands()
         {
-            CurrentItem = null;
+            currentItem = null;
         }
         private void ClearInventoryUI()
         {
@@ -100,8 +102,8 @@ namespace Project.Player
         IEnumerator PlaceItemsInHands(Transform _Item)
         {
             yield return new WaitForSeconds(TimeToPlaceInHands);
-            CurrentItem = _Item;
-            CurrentItem.gameObject.SetActive(true);
+            currentItem = _Item;
+            currentItem.gameObject.SetActive(true);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Project.General.Item
 {
@@ -10,22 +8,21 @@ namespace Project.General.Item
         private void OnEnable()
         {
             Initialization();
-            itemController.ItemPickUpActionEvent += PickUp;
+            itemController.PickUpActionEvent += PickUp;
         }
         private void OnDisable()
         {
-            itemController.ItemPickUpActionEvent -= PickUp;
+            itemController.PickUpActionEvent -= PickUp;
         }
         private void PickUp(Transform _Transform)
         {
-            this.transform.SetParent(_Transform);
-            this.itemController.CallItemPickUpEvent();
+            transform.SetParent(_Transform);
+            itemController.CallItemPickUpEvent();
             transform.gameObject.SetActive(false);
         }
-
         private void Initialization()
         {
-            this.itemController = this.GetComponent<ItemController>();
+            itemController = GetComponent<ItemController>();
         }
     }
 }

@@ -1,54 +1,33 @@
-﻿using Project.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Project.General.Item
 {
     public class ItemThrow : MonoBehaviour
     {
         private ItemController itemController;
-        private Transform myTransform;
         private Rigidbody myRigidbody;
-        private Vector3 throwDirection;
         [SerializeField]
-        private bool canBeThrown = true;
-        [SerializeField]
-        private string throwButtonName;
-        [SerializeField]
-        private float throwForce = 100f;
+        private float throwForce;
 
         private void OnEnable()
         {
             Initialization();
+            itemController.ThrowEvent += ThrowAction;
         }
-        private void Update()
+        private void OnDisable()
         {
-            if(canBeThrown)CheckForInput();
-        }
-
-        private void CheckForInput()
-        {
-            if (Input.GetButtonDown(throwButtonName) && myTransform.root.CompareTag(References.PlayerTag))
-            {
-                ThrowAction();
-            }
+            itemController.ThrowEvent -= ThrowAction;
         }
         private void ThrowAction()
         {
-            throwDirection = myTransform.parent.forward;
-            myTransform.parent = null;
-            itemController.CallItemThrowEvent();
-            HurtItem();
-        }
-        private void HurtItem()
-        {
-            myRigidbody.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+            myRigidbody.AddForce(transform.forward * throwForce, ForceMode.Impulse);
+            Debug.Log(throwForce +" " + myRigidbody.velocity.magnitude);
         }
 
         private void Initialization()
         {
-            this.itemController = this.GetComponent<ItemController>();
-            this.myTransform = this.transform;
-            this.myRigidbody = this.GetComponent<Rigidbody>();
+            itemController = GetComponent<ItemController>();
+            myRigidbody = GetComponent<Rigidbody>();
         }
     }
 }

@@ -7,29 +7,30 @@ namespace Project.General.Item
 {
     public class ItemSetTransform : MonoBehaviour
     {
+        [SerializeField]
+        private Vector3 localPosition;
         private ItemController itemController;
-        public Vector3 localPosition;
         private void OnEnable()
         {
-            this.Initialization();
-            ResetTransform();
-            itemController.ItemPickUpEvent += ResetTransform;
+            Initialization();
+            if (itemController.IsInInventory)
+            {
+                ResetTransform();
+            }
+            itemController.PickUpEvent += ResetTransform;
         }
         private void OnDisable()
         {
-            itemController.ItemPickUpEvent -= ResetTransform;
+            itemController.PickUpEvent -= ResetTransform;
         }
         private void ResetTransform()
         {
-            if (transform.root.CompareTag(References.PlayerTag))
-            {
-                this.transform.localPosition = this.localPosition;
-                this.transform.localRotation = Quaternion.identity;
-            }
+            transform.localPosition = localPosition;
+            transform.localRotation = Quaternion.identity;
         }
         private void Initialization()
         {
-            this.itemController = GetComponent<ItemController>();
+            itemController = GetComponent<ItemController>();
         }
     }
-} 
+}

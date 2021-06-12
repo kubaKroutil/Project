@@ -17,14 +17,6 @@ namespace Project.Core
         private GameObject player;
         public static GameObject Player;
         #endregion
-        #region BUTTONS
-        [SerializeField]
-        private string toggleInventoryButton;
-        public static string ToggleInventoryButton;
-        [SerializeField]
-        private string toggleMenuButton;
-        public static string ToggleMenuButton;
-        #endregion
         private void Awake()
         {
             SetReferences();
@@ -34,17 +26,6 @@ namespace Project.Core
             PlayerTag = playerTag;
             ItemTag = itemTag;
             Player = player;
-            ToggleInventoryButton = toggleInventoryButton;
-            ToggleMenuButton = toggleMenuButton;
-        }
-        /// <summary>
-        /// Compare given transform to player tag
-        /// </summary>
-        /// <param name="transformToCompare"></param>
-        /// <returns></returns>
-        public static bool CompareToPlayerTag(Transform transformToCompare)
-        {
-            return transformToCompare.CompareTag(References.PlayerTag);
         }
     }
 }

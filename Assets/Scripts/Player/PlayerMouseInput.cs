@@ -56,7 +56,7 @@ namespace Project.Player
         }
         private bool CanMouseRaycast()
         {
-            return !EventSystem.current.IsPointerOverGameObject() && Time.timeScale != 0;
+            return !EventSystem.current.IsPointerOverGameObject() && !playerController.GameManagerMaster.IsPaused;
         }
         private bool MouseRaycast()
         {

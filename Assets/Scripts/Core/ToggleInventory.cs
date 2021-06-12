@@ -7,10 +7,6 @@ namespace Project.Core
         [SerializeField]
         private GameObject InventoryUI;
         private GameManagerMaster gameManagerMaster;
-        private void Update()
-        {
-            CheckForInput();
-        }
         private void OnEnable()
         {
             Initialization();
@@ -27,14 +23,6 @@ namespace Project.Core
             if (InventoryUI == null)
             {
                 Debug.LogError("InventoryUI not found! by ToggleInventory class, gameobject: " + gameObject.name);
-            }
-        }
-
-        private void CheckForInput()
-        {
-            if (Input.GetButtonDown(References.ToggleInventoryButton) && gameManagerMaster.CanOpenInventory)
-            {
-                gameManagerMaster.CallInventoryUIToggleEvent();
             }
         }
         public void InventoryToggle()

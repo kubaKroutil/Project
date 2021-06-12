@@ -1,57 +1,63 @@
 ﻿using Project.Core;
 using Project.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.General.Item
 {
-public class ItemController : MonoBehaviour
-{
+    public class ItemController : MonoBehaviour
+    {
         public delegate void ItemEventHandler();
-        public event ItemEventHandler ItemThrowEvent;
-        public event ItemEventHandler ItemPickUpEvent;
+        public event ItemEventHandler ThrowEvent;
+        public event ItemEventHandler DropEvent;
+        public event ItemEventHandler PickUpEvent;
 
         public delegate void ItemPickUpActionEventHandler(Transform item);
-        public event ItemPickUpActionEventHandler ItemPickUpActionEvent;
+        public event ItemPickUpActionEventHandler PickUpActionEvent;
 
+        [SerializeField]
+        private string itemName;
         private PlayerController playerController;
-        public string Name { get; private set; }
+        public bool IsInInventory { get { return transform.root.CompareTag(References.PlayerTag); } }
+
         private void OnEnable()
         {
             Initialization();
         }
-
         private void Initialization()
         {
             transform.tag = References.ItemTag;
-            transform.name = References.ItemTag;
+            transform.name = itemName;
             playerController = References.Player.GetComponent<PlayerController>();
         }
-
         public void CallItemThrowEvent()
         {
-            if (ItemThrowEvent!= null)
-            {
-                this.ItemThrowEvent();
-                
-            }
-            this.playerController.CallHandsEmptyEvent();
-            this.playerController.CallInventoryChangedEvent();
+            RemoveParent();
+            ThrowEvent?.Invoke();
+            RefreshPlayerInventory();
+        }
+        public void CallDropEvent()
+        {
+            RemoveParent();
+            DropEvent?.Invoke();
+            RefreshPlayerInventory();
         }
         public void CallItemPickUpEvent()
         {
-            if (ItemThrowEvent != null)
-            {
-                this.ItemThrowEvent();
-                
-            }
-            this.playerController.CallHandsEmptyEvent();
-            this.playerController.CallInventoryChangedEvent();
+            PickUpEvent?.Invoke();
+            RefreshPlayerInventory();
         }
         public void CallItemPickUpActionEvent(Transform item)
         {
-            ItemPickUpActionEvent?.Invoke(item);
+            PickUpActionEvent?.Invoke(item);
+        }
+        private void RefreshPlayerInventory()
+        {
+            playerController.CallHandsEmptyEvent();
+            playerController.CallInventoryChangedEvent();
+        }
+        private void RemoveParent()
+        {
+            transform.parent = null;
         }
     }
 }

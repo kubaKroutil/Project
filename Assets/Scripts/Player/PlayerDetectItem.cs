@@ -13,42 +13,40 @@ namespace Project.Player
         private PlayerController playerController;
         private void OnEnable()
         {
-            this.Initialization();
-            this.playerController.PickItemEvent += PickItem;
-            this.playerController.SetItemToPickEvent += SetItemToPick;
+            Initialization();
+            playerController.PickItemEvent += PickItem;
+            playerController.SetItemToPickEvent += SetItemToPick;
         }
         private void OnDisable()
         {
-            this.playerController.PickItemEvent -= PickItem;
-            this.playerController.SetItemToPickEvent -= SetItemToPick;
+            playerController.PickItemEvent -= PickItem;
+            playerController.SetItemToPickEvent -= SetItemToPick;
         }
         void Update()
         {
-            this.CheckItemDistance();
+            CheckItemDistance();
         }
 
         private void CheckItemDistance()
         {
-            if (this.ItemToPick == null) return;
-            //Debug.Log(Vector3.Distance(this.transform.position, ItemToPick.position));
-            if (Vector3.Distance(this.transform.position, this.ItemToPick.position) < this.pickRange)
+            if (ItemToPick != null && Vector3.Distance(transform.position, ItemToPick.position) < pickRange)
             {
-                this.playerController.CallPickItemEvent();
+                playerController.CallPickItemEvent();
             }
         }
 
         private void Initialization()
         {
-            this.playerController = this.GetComponent<PlayerController>();
+            playerController = GetComponent<PlayerController>();
         }
         private void SetItemToPick(Transform item)
         {
-            this.ItemToPick = item;
+            ItemToPick = item;
         }
         private void PickItem()
         {
-            this.ItemToPick.GetComponent<ItemController>().CallItemPickUpActionEvent(PlayerInventoryParent);
-            this.SetItemToPick(null);
+            ItemToPick.GetComponent<ItemController>().CallItemPickUpActionEvent(PlayerInventoryParent);
+            SetItemToPick(null);
         }
     }
 }

@@ -1,34 +1,36 @@
 ﻿using Project.Core;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.General.Item
 {
     public class ItemSetLayer : MonoBehaviour
     {
+        [SerializeField]
+        private string itemThrowLayer;
+        [SerializeField]
+        private string itemPickUpLayer;
         private ItemController itemController;
-        public string itemThrowLayer;
-        public string itemPickUpLayer;
         private void OnEnable()
         {
-            this.Initialization();
+            Initialization();
             SetLayerOnEnable();
-            this.itemController.ItemPickUpEvent += this.SetItemToPickUpLayer;
-            this.itemController.ItemThrowEvent += this.SetItemToThrowLayer;
+            itemController.PickUpEvent += SetItemToPickUpLayer;
+            itemController.ThrowEvent += SetItemToThrowLayer;
+            itemController.DropEvent += SetItemToThrowLayer;
         }
         private void OnDisable()
         {
-            this.itemController.ItemPickUpEvent -= this.SetItemToPickUpLayer;
-            this.itemController.ItemThrowEvent -= this.SetItemToThrowLayer;
+            itemController.PickUpEvent -= SetItemToPickUpLayer;
+            itemController.ThrowEvent -= SetItemToThrowLayer;
+            itemController.DropEvent -= SetItemToThrowLayer;
         }
         private void SetItemToThrowLayer()
         {
-            SetLayer(this.transform, itemThrowLayer);
+            SetLayer(transform, itemThrowLayer);
         }
         private void SetItemToPickUpLayer()
         {
-            SetLayer(this.transform, itemPickUpLayer);
+            SetLayer(transform, itemPickUpLayer);
         }
         private void SetLayerOnEnable()
         {
@@ -41,7 +43,7 @@ namespace Project.General.Item
                 itemPickUpLayer = References.ItemTag;
             }
 
-            if (this.transform.root.CompareTag(References.PlayerTag))
+            if (itemController.IsInInventory)
             {
                 SetItemToPickUpLayer();
             }
@@ -53,7 +55,6 @@ namespace Project.General.Item
         private void SetLayer(Transform transform, string itemLayerName)
         {
             transform.gameObject.layer = LayerMask.NameToLayer(itemLayerName);
-            //change layer for each child
             foreach (Transform child in transform)
             {
                 SetLayer(child, itemLayerName);
@@ -61,8 +62,7 @@ namespace Project.General.Item
         }
         private void Initialization()
         {
-            this.itemController = GetComponent<ItemController>();
-
+            itemController = GetComponent<ItemController>();
         }
     }
 }

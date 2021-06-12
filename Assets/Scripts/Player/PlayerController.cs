@@ -22,10 +22,10 @@ public class PlayerController : MonoBehaviour
         public event PlayerHealthEventHandler PlayerHealthIncreaseEvent;
         public event PlayerHealthEventHandler PlayerHealthDecreaseEvent;
 
-        public GameManagerMaster GameManagerMaster { get; set; }
+        public GameManagerMaster GameManagerMaster { get; private set; }
         private void Awake()
         {
-            this.GameManagerMaster = GameObject.FindObjectOfType<GameManagerMaster>();
+            GameManagerMaster = FindObjectOfType<GameManagerMaster>();
         }
         public void CallSetItemToPickEvent(Transform transform)
         {
