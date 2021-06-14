@@ -16,7 +16,7 @@ namespace Project.General.Item
 
         [SerializeField]
         private string itemName;
-        private PlayerController playerController;
+        public PlayerController PlayerController { get; private set; }
         public bool IsInInventory { get { return transform.root.CompareTag(References.PlayerTag); } }
 
         private void OnEnable()
@@ -27,17 +27,15 @@ namespace Project.General.Item
         {
             transform.tag = References.ItemTag;
             transform.name = itemName;
-            playerController = References.Player.GetComponent<PlayerController>();
+            PlayerController = References.Player.GetComponent<PlayerController>();
         }
         public void CallItemThrowEvent()
         {
-            RemoveParent();
             ThrowEvent?.Invoke();
             RefreshPlayerInventory();
         }
         public void CallDropEvent()
         {
-            RemoveParent();
             DropEvent?.Invoke();
             RefreshPlayerInventory();
         }
@@ -52,12 +50,8 @@ namespace Project.General.Item
         }
         private void RefreshPlayerInventory()
         {
-            playerController.CallHandsEmptyEvent();
-            playerController.CallInventoryChangedEvent();
-        }
-        private void RemoveParent()
-        {
-            transform.parent = null;
+            PlayerController.CallHandsEmptyEvent();
+            PlayerController.CallInventoryChangedEvent();
         }
     }
 }

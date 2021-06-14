@@ -6,9 +6,6 @@ namespace Project.General.Item
     {
         private ItemController itemController;
         private Rigidbody myRigidbody;
-        [SerializeField]
-        private float throwForce;
-
         private void OnEnable()
         {
             Initialization();
@@ -18,16 +15,16 @@ namespace Project.General.Item
         {
             itemController.ThrowEvent -= ThrowAction;
         }
-        private void ThrowAction()
-        {
-            myRigidbody.AddForce(transform.forward * throwForce, ForceMode.Impulse);
-            Debug.Log(throwForce +" " + myRigidbody.velocity.magnitude);
-        }
-
         private void Initialization()
         {
             itemController = GetComponent<ItemController>();
             myRigidbody = GetComponent<Rigidbody>();
+        }
+        private void ThrowAction()
+        {
+            transform.parent = null;
+            myRigidbody.isKinematic = false;
+            myRigidbody.AddForce(transform.forward * itemController.PlayerController.ThrowForce, ForceMode.Impulse);
         }
     }
 }

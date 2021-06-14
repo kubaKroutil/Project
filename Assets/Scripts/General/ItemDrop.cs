@@ -7,7 +7,6 @@ namespace Project.General.Item
         private ItemController itemController;
         private Rigidbody myRigidbody;
         private readonly float dropForce = 1f;
-
         private void OnEnable()
         {
             Initialization();
@@ -17,15 +16,16 @@ namespace Project.General.Item
         {
             itemController.DropEvent -= DropItem;
         }
-        private void DropItem()
-        {
-            myRigidbody.AddForce(transform.forward * dropForce, ForceMode.Impulse);
-        }
-
         private void Initialization()
         {
             itemController = GetComponent<ItemController>();
             myRigidbody = GetComponent<Rigidbody>();
+        }
+        private void DropItem()
+        {
+            myRigidbody.isKinematic = false;
+            transform.parent = null;
+            myRigidbody.AddForce(transform.forward * dropForce, ForceMode.Impulse);
         }
     }
 }
