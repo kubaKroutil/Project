@@ -11,9 +11,9 @@ namespace Project.Core
         public bool isGameOver = false;
         public bool isInventoryUIOn = false;
         public bool isMenuOn = false;
-        public bool CanOpenMenu { get { return !isGameOver && !isInventoryUIOn; } }
-        public bool CanOpenInventory { get { return !isGameOver && !isMenuOn; } }
-        public bool IsPaused { get { return isInventoryUIOn || isMenuOn; } }
+        public bool CanOpenMenu => !isGameOver && !isInventoryUIOn;
+        public bool CanOpenInventory => !isGameOver && !isMenuOn;
+        public bool IsPaused => isInventoryUIOn || isMenuOn;
 
         public void CallMenuToggleEvent()
         {

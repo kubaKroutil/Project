@@ -1,5 +1,5 @@
 ﻿using Project.Core;
-using System.Collections;
+using Project.General;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace Project.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        #region DELEGATES
+        #region DELEGATES SETUP
         public delegate void PlayerEventHandler();
         public event PlayerEventHandler InventoryChangedEvent;
         public event PlayerEventHandler HandsEmptyEvent;
@@ -20,7 +20,7 @@ namespace Project.Player
         public delegate void SetItemToPickHandler(Transform itemTransform);
         public event SetItemToPickHandler SetItemToPickEvent;
 
-        public delegate void PlayerHealthEventHandler(int hitPointChange);
+        public delegate void PlayerHealthEventHandler(float hitPointChange);
         public event PlayerHealthEventHandler PlayerHealthIncreaseEvent;
         public event PlayerHealthEventHandler PlayerHealthDecreaseEvent;
         #endregion
@@ -28,10 +28,13 @@ namespace Project.Player
         private float throwForce;
         public float ThrowForce { get { return throwForce; } }
         public GameManagerMaster GameManagerMaster { get; private set; }
+
+        private List<EffectBase> Effects;
         private void Awake()
         {
             GameManagerMaster = FindObjectOfType<GameManagerMaster>();
         }
+        #region DELEGATES CALL
         public void CallSetItemToPickEvent(Transform transform)
         {
             SetItemToPickEvent?.Invoke(transform);
@@ -42,32 +45,28 @@ namespace Project.Player
         }
         public void CallInventoryChangedEvent()
         {
-            CallEvent(InventoryChangedEvent);
+            InventoryChangedEvent?.Invoke();
         }
         public void CallPickItemEvent()
         {
-            CallEvent(PickItemEvent);
+            PickItemEvent?.Invoke();
         }
         public void CallHandsEmptyEvent()
         {
-            CallEvent(HandsEmptyEvent);
+            HandsEmptyEvent?.Invoke();
         }
         public void CallAmmoChangedEvent()
         {
-            CallEvent(AmmoChangedEvent);
+            AmmoChangedEvent?.Invoke();
         }
-        public void CallPlayerHealthIncreaseEvent(int _Hitpoints)
+        public void CallPlayerHealthIncreaseEvent(float _Heal)
         {
-            PlayerHealthIncreaseEvent?.Invoke(_Hitpoints);
+            PlayerHealthIncreaseEvent?.Invoke(_Heal);
         }
-        public void CallPlayerHealthDecreaseEvent(int _Damage)
+        public void CallPlayerHealthDecreaseEvent(float _Damage)
         {
             PlayerHealthDecreaseEvent?.Invoke(_Damage);
-        }
-
-        private void CallEvent(PlayerEventHandler eventToCall)
-        {
-            eventToCall?.Invoke();
-        }
+        } 
+        #endregion
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Project.Player
@@ -8,7 +6,7 @@ namespace Project.Player
     public class PlayerHealth : MonoBehaviour
     {
         [SerializeField]
-        private int hitPoints;
+        private float hitPoints;
         [SerializeField]
         private Text healthText;
         private PlayerController playerController;
@@ -24,13 +22,15 @@ namespace Project.Player
             playerController.PlayerHealthIncreaseEvent -= HealthIncrease;
             playerController.PlayerHealthDecreaseEvent -= HealthDecrease;
         }
-        private void HealthIncrease(int _HP)
+        private void HealthIncrease(float _HP)
         {
             hitPoints += _HP;
+            SetUI();
         }
-        private void HealthDecrease(int _HP)
+        private void HealthDecrease(float _HP)
         {
             hitPoints -= _HP;
+            SetUI();
             //SET GAME OVER
         }
         private void SetUI()
@@ -39,7 +39,7 @@ namespace Project.Player
         }
         private void Initialization()
         {
-            this.playerController = this.transform.root.GetComponent<PlayerController>();
+            playerController = transform.root.GetComponent<PlayerController>();
         }
     }
 }

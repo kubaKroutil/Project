@@ -10,6 +10,7 @@ namespace Project.General.Item
         [SerializeField]
         private string itemPickUpLayer;
         private ItemController itemController;
+        private Transform myTransform;
         private void OnEnable()
         {
             Initialization();
@@ -26,11 +27,11 @@ namespace Project.General.Item
         }
         private void SetItemToThrowLayer()
         {
-            SetLayer(transform, itemThrowLayer);
+            SetLayer(myTransform, itemThrowLayer);
         }
         private void SetItemToPickUpLayer()
         {
-            SetLayer(transform, itemPickUpLayer);
+            SetLayer(myTransform, itemPickUpLayer);
         }
         private void SetLayerOnEnable()
         {
@@ -63,6 +64,7 @@ namespace Project.General.Item
         private void Initialization()
         {
             itemController = GetComponent<ItemController>();
+            myTransform = GetComponent<Transform>();
         }
     }
 }

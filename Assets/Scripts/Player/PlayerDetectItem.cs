@@ -6,10 +6,10 @@ namespace Project.Player
     public class PlayerDetectItem : MonoBehaviour
     {
         [SerializeField]
-        private Transform PlayerInventoryParent;
+        private Transform playerInventoryParent;
         [SerializeField]
         private float pickRange = 1f;
-        private Transform ItemToPick;
+        private Transform itemToPick;
         private PlayerController playerController;
         private void OnEnable()
         {
@@ -29,23 +29,22 @@ namespace Project.Player
 
         private void CheckItemDistance()
         {
-            if (ItemToPick != null && Vector3.Distance(transform.position, ItemToPick.position) < pickRange)
+            if (itemToPick != null && Vector3.Distance(transform.position, itemToPick.position) < pickRange)
             {
                 playerController.CallPickItemEvent();
             }
         }
-
         private void Initialization()
         {
             playerController = GetComponent<PlayerController>();
         }
         private void SetItemToPick(Transform item)
         {
-            ItemToPick = item;
+            itemToPick = item;
         }
         private void PickItem()
         {
-            ItemToPick.GetComponent<ItemController>().CallItemPickUpActionEvent(PlayerInventoryParent);
+            itemToPick.GetComponent<ItemController>().CallItemPickUpActionEvent(playerInventoryParent);
             SetItemToPick(null);
         }
     }

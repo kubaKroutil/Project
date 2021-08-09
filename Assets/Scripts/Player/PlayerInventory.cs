@@ -9,56 +9,55 @@ namespace Project.Player
     public class PlayerInventory : MonoBehaviour
     {
         [SerializeField]
-        private Transform InventoryPlayerParent;
+        private Transform inventoryPlayerParent;
         [SerializeField]
-        private Transform InventoryUIParent;
+        private Transform inventoryUIParent;
         [SerializeField]
-        private GameObject ButtonPrefab;
+        private GameObject buttonPrefab;
         [SerializeField]
-        private float TimeToPlaceInHands = 0.3f;
+        private float timeToPlaceInHands = 0.3f;
 
-        private PlayerController PlayerController;
-        private int Counter;
-        private List<Transform> Inventory = new List<Transform>();
-        public Transform currentItem;
-        public bool AreHandsEmpty { get { return currentItem == null; } }
-        public bool IsItemInHands { get { return !AreHandsEmpty && currentItem.CompareTag(References.ItemTag); } }
+        private PlayerController playerController;
+        private readonly List<Transform> Inventory = new List<Transform>();
+        public Transform CurrentItem { get; set; }
+        public bool AreHandsEmpty => CurrentItem == null;
+        public bool IsInventoryEmpty => Inventory.Count == 0;
+
         private void Initialization()
         {
-            PlayerController = transform.root.GetComponent<PlayerController>();
+            playerController = transform.root.GetComponent<PlayerController>();
         }
         private void OnEnable()
         {
             Initialization();
             UpdateInventoryAndUI();
             CheckIfHandsEmpty();
-            this.PlayerController.InventoryChangedEvent += UpdateInventoryAndUI;
-            this.PlayerController.InventoryChangedEvent += CheckIfHandsEmpty;
-            this.PlayerController.HandsEmptyEvent += ClearHands;
+            playerController.InventoryChangedEvent += UpdateInventoryAndUI;
+            playerController.InventoryChangedEvent += CheckIfHandsEmpty;
+            playerController.HandsEmptyEvent += ClearHands;
         }
         private void OnDisable()
         {
-            this.PlayerController.InventoryChangedEvent -= UpdateInventoryAndUI;
-            this.PlayerController.InventoryChangedEvent -= CheckIfHandsEmpty;
-            this.PlayerController.HandsEmptyEvent -= ClearHands;
+            playerController.InventoryChangedEvent -= UpdateInventoryAndUI;
+            playerController.InventoryChangedEvent -= CheckIfHandsEmpty;
+            playerController.HandsEmptyEvent -= ClearHands;
         }
         private void UpdateInventoryAndUI()
         {
-            this.Counter = 0;
+            int Counter = 0;
             Inventory.Clear();
             Inventory.TrimExcess();
             ClearInventoryUI();
-            foreach (Transform transform in this.InventoryPlayerParent)
+            foreach (Transform transform in inventoryPlayerParent)
             {
                 if (transform.CompareTag("Item"))
                 {
-                    this.Inventory.Add(transform);
-                    GameObject go = Instantiate(ButtonPrefab) as GameObject;
+                    Inventory.Add(transform);
+                    GameObject go = Instantiate(buttonPrefab) as GameObject;
                     go.GetComponentInChildren<Text>().text = transform.name;
-                    int index = this.Counter;
-                    go.GetComponent<Button>().onClick.AddListener(delegate { ActivateInventoryItem(index); });
-                    go.GetComponent<Button>().onClick.AddListener(delegate { PlayerController.GameManagerMaster.CallInventoryUIToggleEvent(); });
-                    go.transform.SetParent(this.InventoryUIParent, false);
+                    go.GetComponent<Button>().onClick.AddListener(delegate { ActivateInventoryItem(Counter); });
+                    go.GetComponent<Button>().onClick.AddListener(delegate { playerController.GameManagerMaster.CallInventoryUIToggleEvent(); });
+                    go.transform.SetParent(inventoryUIParent, false);
                     Counter++;
                 }
             }
@@ -68,30 +67,30 @@ namespace Project.Player
         /// </summary>
         private void CheckIfHandsEmpty()
         {
-            if (currentItem == null && Inventory.Count > 0)
+            if (AreHandsEmpty && !IsInventoryEmpty)
             {
                 StartCoroutine(PlaceItemsInHands(Inventory[0]));
             }
         }
         private void ClearHands()
         {
-            currentItem = null;
+            CurrentItem = null;
         }
         private void ClearInventoryUI()
         {
-            foreach (Transform transform in this.InventoryUIParent)
+            foreach (Transform transform in inventoryUIParent)
             {
                 Destroy(transform.gameObject);
             }
         }
-        public void ActivateInventoryItem(int _Index)
+        public void ActivateInventoryItem(int itemIndex)
         {
             DeactivateAllItems();
-            StartCoroutine(PlaceItemsInHands(Inventory[_Index]));
+            StartCoroutine(PlaceItemsInHands(Inventory[itemIndex]));
         }
         private void DeactivateAllItems()
         {
-            foreach (Transform transform in this.InventoryPlayerParent)
+            foreach (Transform transform in inventoryPlayerParent)
             {
                 if (transform.CompareTag(References.ItemTag))
                 {
@@ -99,11 +98,12 @@ namespace Project.Player
                 }
             }
         }
-        IEnumerator PlaceItemsInHands(Transform _Item)
+
+        private IEnumerator PlaceItemsInHands(Transform _Item)
         {
-            yield return new WaitForSeconds(TimeToPlaceInHands);
-            currentItem = _Item;
-            currentItem.gameObject.SetActive(true);
+            yield return new WaitForSeconds(timeToPlaceInHands);
+            CurrentItem = _Item;
+            CurrentItem.gameObject.SetActive(true);
         }
     }
 }

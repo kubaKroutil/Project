@@ -21,7 +21,7 @@ namespace Project.Core
             gameManagerMaster = GetComponent<GameManagerMaster>();
             if (menu == null)
             {
-                Debug.LogError("InventoryUI not found! by ToggleInventory class, gameobject: " + this.gameObject.name);
+                Debug.LogError("InventoryUI not found! by ToggleInventory class, gameobject: " + gameObject.name);
             }
         }
         private void MenuToggle()

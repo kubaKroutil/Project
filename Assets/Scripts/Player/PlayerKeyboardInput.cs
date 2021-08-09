@@ -23,11 +23,8 @@ namespace Project.Player
         private void Update()
         {
             CoreMechanics();
-            if (!CanPlay()) return;
-            if (playerInventory.IsItemInHands)
-            {
-                CheckItemActions();
-            }
+            if (!CanPlay() || playerInventory.AreHandsEmpty) return;
+            CheckItemActions();
         }
 
         private void CoreMechanics()
@@ -37,32 +34,31 @@ namespace Project.Player
         }
         private void CheckItemActions()
         {
-            if (HasItemInHands())
-            {
-                CheckForDropAction();
-                CheckForThrowAction();
-            }
-            //weapon action
+            CheckForDropAction();
+            CheckForThrowAction();
+            CheckForConsumeAction();
         }
 
         private void CheckForDropAction()
         {
             if (Input.GetButtonDown(dropButtonName))
             {
-                playerInventory.currentItem.GetComponent<ItemController>().CallDropEvent();
+                playerInventory.CurrentItem.GetComponent<ItemController>().CallDropEvent();
             }
         }
         private void CheckForThrowAction()
         {
             if (Input.GetButtonDown(throwButtonName))
             {
-                playerInventory.currentItem.GetComponent<ItemController>().CallItemThrowEvent();
+                playerInventory.CurrentItem.GetComponent<ItemController>().CallItemThrowEvent();
             }
         }
-
-        private bool HasItemInHands()
+        private void CheckForConsumeAction()
         {
-            return playerInventory.currentItem != null && IsTransformItem(playerInventory.currentItem);
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                playerInventory.CurrentItem.GetComponent<ItemController>().CallItemConsumeEvent();
+            }
         }
 
         private void Initialization()
@@ -87,10 +83,6 @@ namespace Project.Player
             {
                 playerController.GameManagerMaster.CallMenuToggleEvent();
             }
-        }
-        private bool IsTransformItem(Transform transform)
-        {
-            return transform.CompareTag(References.ItemTag);
         }
     }
 }

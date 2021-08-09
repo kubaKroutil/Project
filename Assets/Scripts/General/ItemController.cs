@@ -10,6 +10,7 @@ namespace Project.General.Item
         public event ItemEventHandler ThrowEvent;
         public event ItemEventHandler DropEvent;
         public event ItemEventHandler PickUpEvent;
+        public event ItemEventHandler ConsumeEvent;
 
         public delegate void ItemPickUpActionEventHandler(Transform item);
         public event ItemPickUpActionEventHandler PickUpActionEvent;
@@ -17,7 +18,7 @@ namespace Project.General.Item
         [SerializeField]
         private string itemName;
         public PlayerController PlayerController { get; private set; }
-        public bool IsInInventory { get { return transform.root.CompareTag(References.PlayerTag); } }
+        public bool IsInInventory => transform.root.CompareTag(References.PlayerTag);
 
         private void OnEnable()
         {
@@ -28,6 +29,11 @@ namespace Project.General.Item
             transform.tag = References.ItemTag;
             transform.name = itemName;
             PlayerController = References.Player.GetComponent<PlayerController>();
+        }
+        public void CallItemConsumeEvent()
+        {
+            ConsumeEvent?.Invoke();
+            RefreshPlayerInventory();
         }
         public void CallItemThrowEvent()
         {

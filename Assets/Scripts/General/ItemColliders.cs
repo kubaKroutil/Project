@@ -9,7 +9,10 @@ namespace Project.General.Item
         private void OnEnable()
         {
             Initialization();
-            CheckIfStartInInventory();
+            if (itemController.IsInInventory)
+            {
+                DisableColliders();
+            }
             itemController.ThrowEvent += EnableColliders;
             itemController.DropEvent += EnableColliders;
             itemController.PickUpEvent += DisableColliders;
@@ -19,13 +22,6 @@ namespace Project.General.Item
             itemController.ThrowEvent -= EnableColliders;
             itemController.DropEvent -= EnableColliders;
             itemController.PickUpEvent -= DisableColliders;
-        }
-        private void CheckIfStartInInventory()
-        {
-            if (itemController.IsInInventory)
-            {
-                DisableColliders();
-            }
         }
         private void EnableColliders()
         {
