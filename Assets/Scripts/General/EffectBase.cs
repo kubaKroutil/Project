@@ -7,7 +7,7 @@ namespace Project.General
     [System.Serializable]
     public enum EffectType
     {
-        Poison, Slow
+        Haste, Slow
     }
     [System.Serializable]
     public abstract class EffectBase
@@ -15,33 +15,45 @@ namespace Project.General
         public float Duration { get; protected set; }
         public EffectType Type { get; protected set; }
         public float Countdown { get; protected set; }
-        public float CausedBy { get; protected set; }
+        public string CausedBy { get; protected set; }
         public bool Quit { get; protected set; }
+        public List<EffectBase> EffectList { get; protected set; }
 
-        public EffectBase(float duration, EffectType type, float causedBy)
+        public EffectBase(EffectType type, List<EffectBase> effectList, float duration, string causedBy)
         {
             Duration = duration;
             Type = type;
             Countdown = Duration;
             CausedBy = causedBy;
             Quit = false;
-            //StartCoroutine(DoEffect());
+            EffectList = effectList;
         }
-
-        protected abstract IEnumerator DoEffect();
-
+        public IEnumerator StartEffect()
+        {
+            OnEffectStart();
+            yield return Wait();
+            OnEffectEnd();
+            yield break;
+        }
+        public void EndEffect()
+        {
+            Quit = false;
+        }
+        protected abstract void OnEffectStart();
+        protected virtual void OnEffectEnd()
+        {
+            EffectList.Remove(this);
+        }
         protected IEnumerator Wait()
         {
             while (Countdown > 0)
             {
                 Countdown -= Time.deltaTime;
-                Debug.Log("We have waited for: " + Countdown + " seconds");
+                Debug.Log(Countdown);
                 if (Quit)
                 {
-                    //Quit function
                     yield break;
                 }
-                //Wait for a frame so that Unity doesn't freeze
                 yield return null;
             }
         }
