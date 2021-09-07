@@ -11,7 +11,7 @@ namespace Project.Player
         [SerializeField]
         private float labelHeight = 50;
         [SerializeField]
-        private float labelOffset = 10;
+        private float labelOffset = 50;
         private Transform raycastHitTransform;
         private Vector3 raycastHitPosition;
         private PlayerController playerController;
@@ -90,7 +90,7 @@ namespace Project.Player
                 //float yPos = Screen.height - Input.mousePosition.y > 0 ?
                 //             Screen.height - Input.mousePosition.y - labelOffset
                 //            : Screen.height - Input.mousePosition.y + labelOffset;
-                GUI.Label(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y, labelWidth, labelHeight), raycastHitTransform.name);
+                GUI.Label(new Rect(Input.mousePosition.x, Screen.height - (Input.mousePosition.y + 15), labelWidth, labelHeight), raycastHitTransform.name);
             }
         }
     }

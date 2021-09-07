@@ -27,10 +27,9 @@ namespace Project.Player
         #endregion
         [SerializeField]
         private float throwForce;
-        public float ThrowForce { get { return throwForce; } }
+        public float ThrowForce => throwForce;
         public GameManagerMaster GameManagerMaster { get; private set; }
-        [SerializeField]
-        private List<EffectBase> Effects;
+        public List<EffectBase> Effects { get; private set; }
         #region UNITY METHODS
         private void Awake()
         {
@@ -39,7 +38,6 @@ namespace Project.Player
         }
         private void OnGUI()
         {
-            //Debug.Log(Screen.height + "=" + Screen.height + " adsa " + Input.mousePosition.x + " - " + Input.mousePosition.y);
             if (Effects.Count > 0)
             {
                 string EffectsLabel = "Effects:";
@@ -64,7 +62,6 @@ namespace Project.Player
         public void CallMoveEvent(Vector3 _Vector3)
         {
             MoveEvent?.Invoke(_Vector3);
-            //AddEffect(new EffectSlow(Effects, 2, "aaa", GetComponent<NavMeshAgent>()));
         }
         public void CallInventoryChangedEvent()
         {
@@ -91,7 +88,5 @@ namespace Project.Player
             PlayerHealthDecreaseEvent?.Invoke(_Damage);
         }
         #endregion
-
-
     }
 }

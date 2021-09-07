@@ -1372,7 +1372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b88a0d603311af4ab6f65d8d8df3fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: heal
+  itemName: cubee
 --- !u!54 &353430915
 Rigidbody:
   m_ObjectHideFlags: 0

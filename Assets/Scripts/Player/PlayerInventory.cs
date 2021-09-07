@@ -17,6 +17,7 @@ namespace Project.Player
         [SerializeField]
         private float timeToPlaceInHands = 0.3f;
 
+
         private PlayerController playerController;
         private readonly List<Transform> Inventory = new List<Transform>();
         public Transform CurrentItem { get; set; }
@@ -52,10 +53,13 @@ namespace Project.Player
             {
                 if (transform.CompareTag("Item"))
                 {
+                    //TODO:ActivateInventoryItem(Counter) not working
+                    int index = Counter;
                     Inventory.Add(transform);
                     GameObject go = Instantiate(buttonPrefab) as GameObject;
                     go.GetComponentInChildren<Text>().text = transform.name;
-                    go.GetComponent<Button>().onClick.AddListener(delegate { ActivateInventoryItem(Counter); });
+                    go.GetComponent<Button>().onClick.AddListener(delegate { ActivateInventoryItem(index); });
+                    Debug.Log(Counter);
                     go.GetComponent<Button>().onClick.AddListener(delegate { playerController.GameManagerMaster.CallInventoryUIToggleEvent(); });
                     go.transform.SetParent(inventoryUIParent, false);
                     Counter++;

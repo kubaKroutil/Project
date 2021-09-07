@@ -49,7 +49,7 @@ namespace Project.General
             while (Countdown > 0)
             {
                 Countdown -= Time.deltaTime;
-                Debug.Log(Countdown);
+                //Debug.Log(Countdown);
                 if (Quit)
                 {
                     yield break;

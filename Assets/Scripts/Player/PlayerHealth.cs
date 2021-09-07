@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Project.General;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Project.Player
@@ -10,6 +11,7 @@ namespace Project.Player
         [SerializeField]
         private Text healthText;
         private PlayerController playerController;
+        private Health health;
         private void OnEnable()
         {
             Initialization();
@@ -24,22 +26,23 @@ namespace Project.Player
         }
         private void HealthIncrease(float _HP)
         {
-            hitPoints += _HP;
+            health.ChangeHealth(_HP);
             SetUI();
         }
         private void HealthDecrease(float _HP)
         {
-            hitPoints -= _HP;
+            health.ChangeHealth(-_HP);
             SetUI();
             //SET GAME OVER
         }
         private void SetUI()
         {
-            healthText.text = hitPoints.ToString();
+            healthText.text = health.CurrentHealth.ToString();
         }
         private void Initialization()
         {
             playerController = transform.root.GetComponent<PlayerController>();
+            health = new Health(hitPoints);
         }
     }
 }
